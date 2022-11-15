@@ -1,0 +1,48 @@
+body {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+input {
+  width: 241px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+
+input.narrow {
+  width: 66px;
+}
+
+input.payload {
+  width: 146px;
+}
+
+button {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 4px;
+  width: 150px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+#buttonContainer > div {
+  padding-bottom: 5px;
+}
+
+#buttonContainer {
+  padding-top: 20px;
+}
+
+.mono {
+  font-family: monospace;
+  font-size: large;
+}
+
+#todoList {
+  padding-top: 20px;
+}

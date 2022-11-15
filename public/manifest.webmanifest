@@ -1,0 +1,96 @@
+{
+  "short_name": "Widgets App",
+  "name": "Widgets Sample App",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay"],
+  "start_url": "./index.html",
+  "icons": [
+    {
+      "src": "icons/48x48.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "icons/144x144.png",
+      "sizes": "144x144"
+    }
+  ],
+  "widgets": [
+    {
+      "name": "Max AC- Single",
+      "tag": "max_ac",
+      "template": "test",
+      "data": "cards/data.json",
+      "type": "application/json",
+      "ms_ac_template": "cards/test.ac.json",
+
+      "short_name": "Max",
+      "description": "A widget that doesn't do much of anything yet.",
+      "screenshots": [
+        {
+          "src": "icons/screenshot.png",
+          "sizes": "600x400",
+          "label": "Test screenshot"
+        }
+      ],
+      "icons": [
+        {
+          "src": "icons/48x48.png",
+          "sizes": "48x48"
+        }
+      ],
+      "backgrounds": [
+        {
+          "src": "icons/background.png",
+          "sizes": "600x400"
+        }
+      ],
+      "auth": false,
+      "update": 100,
+      "actions": [
+        {
+          "action": "buttonClick",
+          "title": "Button Click"
+        }
+      ]
+    },
+    {
+      "name": "Max AC- Multiple",
+      "tag": "max_ac_multiple",
+      "template": "test",
+      "data": "cards/data.json",
+      "type": "application/json",
+      "ms_ac_template": "cards/test.ac.json",
+
+      "short_name": "Max",
+      "description": "A widget that doesn't do much of anything yet.",
+      "screenshots": [
+        {
+          "src": "icons/screenshot.png",
+          "sizes": "600x400",
+          "label": "Test screenshot"
+        }
+      ],
+      "icons": [
+        {
+          "src": "icons/48x48.png",
+          "sizes": "48x48"
+        }
+      ],
+      "backgrounds": [
+        {
+          "src": "icons/background.png",
+          "sizes": "600x400"
+        }
+      ],
+      "auth": false,
+      "multiple": true,
+      "update": 100,
+      "actions": [
+        {
+          "action": "buttonClick",
+          "title": "Button Click"
+        }
+      ]
+    }
+  ]
+}
