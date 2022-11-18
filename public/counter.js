@@ -1,26 +1,45 @@
 const COUNTER_STORAGE = 'counter-db';
 const COUNTER_KEY = 'counter';
 const COUNTER_NAME = 'widget-clicks';
-const COUNT_VALUE = 'count';
 let db = null;
+
+const COUNT_TYPE = {
+  DEFAULT: 'default',
+  INSTALL: 'install',
+  CLICK: 'click',
+  ACTIVATE: 'activate',
+  SW_ACTIVATE: 'swActivate',
+};
 
 const openDatabase = async () => {
   if (db) {
     return Promise.resolve();
   }
-  // Let us open our training sample database.
-  const DBOpenRequest = indexedDB.open(COUNTER_STORAGE);
 
   return new Promise((resolve, reject) => {
+    // Let us open our training sample database.
+    const DBOpenRequest = indexedDB.open(COUNTER_STORAGE, 2);
+
     // Register two event handlers to act on the database being opened successfully, or not.
-    DBOpenRequest.onerror = () => {
-      reject(new Error('Error loading database.'));
+    DBOpenRequest.onerror = (e) => {
+      reject(new Error('Error loading database.', e));
     };
 
-    DBOpenRequest.onupgradeneeded = () => {
+    DBOpenRequest.onupgradeneeded = (event) => {
       const db = DBOpenRequest.result;
-      db.createObjectStore(COUNTER_STORAGE, { keyPath: COUNTER_KEY });
+      if (event.oldVersion < 1) {
+        db.createObjectStore(COUNTER_STORAGE, { keyPath: COUNTER_KEY });
+      }
+
+      if (event.oldVersion < 2) {
+        const objectStore = DBOpenRequest.transaction.objectStore(COUNTER_STORAGE);
+        for (const type of Object.values(COUNT_TYPE)) {
+          objectStore.createIndex(type, type, { unique: false });
+        }
+      }
     };
+
+
 
     DBOpenRequest.onsuccess = () => {
       db = DBOpenRequest.result;
@@ -43,7 +62,8 @@ const getObjectStore = async () => {
   return transaction.objectStore(COUNTER_STORAGE);
 };
 
-const getCount = async (tag) => {
+const getCount = async (tag, type) => {
+  type = type || COUNT_TYPE.DEFAULT;
   const objectStore = await getObjectStore();
   return new Promise((resolve, reject) => {
     const objectStoreRequest = objectStore.get(COUNTER_NAME + tag);
@@ -55,15 +75,17 @@ const getCount = async (tag) => {
 
     objectStoreRequest.onsuccess = () => {
       const { result } = objectStoreRequest;
-      resolve(result ? result[COUNT_VALUE] : 0);
+      const count = result ? result[type] : 0;
+      resolve(count || 0);
     };
   });
 };
 
-const incrementCount = async (tag, count) => {
+const putCounts = async (tag, counts) => {
+  const key = COUNTER_NAME + tag;
   const objectStore = await getObjectStore();
   return new Promise((resolve, reject) => {
-    const objectStoreRequest = objectStore.put({ [COUNTER_KEY]: COUNTER_NAME + tag, [COUNT_VALUE]: count + 1 });
+    const objectStoreRequest = objectStore.put({ [COUNTER_KEY]: key, ...counts });
     objectStoreRequest.onerror = (event) => {
       // report the error of the request
       console.error('Object Store Request failed', event);
@@ -74,10 +96,4 @@ const incrementCount = async (tag, count) => {
       resolve();
     };
   });
-};
-
-const getAndIncrementCount = async (tag) => {
-  const count = await getCount(tag);
-  await incrementCount(tag, count);
-  return count;
 };

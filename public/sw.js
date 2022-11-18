@@ -2,7 +2,10 @@ const defaultActionVerb = 'inc';
 const defaultTemplate = {
   type: 'AdaptiveCard',
   body: [
-    { type: 'TextBlock', text: 'You have clicked the button ${count} times' },
+    { type: 'TextBlock', text: 'Total widget update count: ${total}' },
+    { type: 'TextBlock', text: 'Widget Activate count: ${activate}' },
+    { type: 'TextBlock', text: 'Service worker activate ${swActivate} times' },
+    { type: 'TextBlock', text: 'You have clicked the button ${click} times' },
   ],
   actions: [
     {
@@ -16,24 +19,52 @@ const defaultTemplate = {
   version: '1.5',
 };
 
-importScripts('counter.js');
-
-const defaultData = async (tag) => {
-  // get the stored count
-  const count = await getAndIncrementCount(tag);
-  return { count };
+const WIDGET_TAGS = {
+  MAX_AC: 'max_ac',
+  MAX_AC_MULTIPLE: 'max_ac_multiple',
 };
 
-const defaultPayload = async (tag) => {
+importScripts('counter.js');
+
+const defaultData = async (tag, type) => {
+  // get the stored count
+  const counts = {};
+  for (const countType of Object.values(COUNT_TYPE)) {
+    counts[countType] = await getCount(tag, countType);
+  }
+
+  counts[type] = counts[type] + 1;
+  await putCounts(tag, counts);
+
+
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  return { total, ...counts };
+};
+
+const defaultPayload = async (tag, type) => {
   return {
     template: JSON.stringify(defaultTemplate),
-    data: JSON.stringify(await defaultData(tag)),
+    data: JSON.stringify(await defaultData(tag, type)),
   };
 };
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(clients.claim());
+
+  // Update all widgets when the service worker is activated.
+  event.waitUntil(updateAppWidgets());
 });
+
+const updateAppWidgets = async () => {
+  for (const tag of Object.values(WIDGET_TAGS)) {
+    const widget = await self.widgets.getByTag(tag);
+    if (widget.instances.length > 0) {
+      await updateWidget(widget.definition.tag, COUNT_TYPE.SW_ACTIVATE);
+      // Update count only once for a widget tag.
+      break;
+    }
+  }
+};
 
 self.addEventListener('install', (event) => {
   // cach counter script for offline use
@@ -58,11 +89,11 @@ const incrementWidgetclick = async () => {
 
 self.addEventListener('widgetclick', (event) => {
   if (event.action === 'widget-install') {
-    event.waitUntil(updateWidget(event.tag));
+    event.waitUntil(updateWidget(event.tag, COUNT_TYPE.INSTALL));
   } else if (event.action === 'widget-resume') {
-    event.waitUntil(updateWidget(event.tag));
+    event.waitUntil(updateWidget(event.tag, COUNT_TYPE.ACTIVATE));
   } else if (event.action === defaultActionVerb) {
-    event.waitUntil(updateWidget(event.tag));
+    event.waitUntil(updateWidget(event.tag, COUNT_TYPE.CLICK));
   }
 
   event.waitUntil(console.log(event));
@@ -175,8 +206,8 @@ const updateByInstanceId = async (instanceId, payload) => {
   }
 };
 
-const updateWidget = async (tag) => {
-  await updateByTag(tag, await defaultPayload(tag));
+const updateWidget = async (tag, type) => {
+  await updateByTag(tag, await defaultPayload(tag, type));
 };
 
 self.onmessage = (event) => {
