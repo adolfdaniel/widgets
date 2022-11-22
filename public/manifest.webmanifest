@@ -78,6 +78,7 @@
     {
       "name": "Min AC",
       "tag": "min_ac",
+      "description": "Minimal AC widget for Windows 11 dashboard",
       "screenshots": [
         {
           "src": "icons/screenshot.png",
