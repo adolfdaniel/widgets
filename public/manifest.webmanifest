@@ -38,13 +38,8 @@
           "sizes": "48x48"
         }
       ],
-      "backgrounds": [
-        {
-          "src": "icons/background.png",
-          "sizes": "600x400"
-        }
-      ],
       "auth": false,
+      "multiple": false,
       "update": 100,
       "actions": [
         {
@@ -76,19 +71,24 @@
           "sizes": "48x48"
         }
       ],
-      "backgrounds": [
-        {
-          "src": "icons/background.png",
-          "sizes": "600x400"
-        }
-      ],
       "auth": false,
       "multiple": true,
-      "update": 100,
-      "actions": [
+      "update": 100
+    },
+    {
+      "name": "Min AC",
+      "tag": "min_ac",
+      "screenshots": [
         {
-          "action": "buttonClick",
-          "title": "Button Click"
+          "src": "icons/screenshot.png",
+          "sizes": "600x400",
+          "label": "Test screenshot"
+        }
+      ],
+      "icons": [
+        {
+          "src": "icons/48x48.png",
+          "sizes": "48x48"
         }
       ]
     }
