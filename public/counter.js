@@ -9,6 +9,7 @@ const COUNT_TYPE = {
   CLICK: 'click',
   ACTIVATE: 'activate',
   SW_ACTIVATE: 'swActivate',
+  OPEN_APP: 'openApp',
 };
 
 const openDatabase = async () => {
@@ -38,8 +39,6 @@ const openDatabase = async () => {
         }
       }
     };
-
-
 
     DBOpenRequest.onsuccess = () => {
       db = DBOpenRequest.result;

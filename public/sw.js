@@ -1,17 +1,25 @@
 const defaultActionVerb = 'inc';
+const openAppVerb = 'openApp';
 const defaultTemplate = {
   type: 'AdaptiveCard',
   body: [
     { type: 'TextBlock', text: 'Total widget update count: ${total}' },
     { type: 'TextBlock', text: 'Widget Activate count: ${activate}' },
     { type: 'TextBlock', text: 'Service worker activate ${swActivate} times' },
-    { type: 'TextBlock', text: 'You have clicked the button ${click} times' },
+    { type: 'TextBlock', text: 'You have clicked the increment button ${click} times' },
+    { type: 'TextBlock', text: 'You have opened the app from here ${openApp} times' },
   ],
   actions: [
     {
       type: 'Action.Execute',
       title: 'Increment',
       verb: `${defaultActionVerb}`,
+      style: 'positive',
+    },
+    {
+      type: 'Action.Execute',
+      title: 'Open App',
+      verb: `${openAppVerb}`,
       style: 'positive',
     },
   ],
@@ -35,7 +43,6 @@ const defaultData = async (tag, type) => {
 
   counts[type] = counts[type] + 1;
   await putCounts(tag, counts);
-
 
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   return { total, ...counts };
@@ -94,11 +101,35 @@ self.addEventListener('widgetclick', (event) => {
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.ACTIVATE));
   } else if (event.action === defaultActionVerb) {
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.CLICK));
+  } else if (event.action === openAppVerb) {
+    event.waitUntil(openApp(event.tag));
+    event.waitUntil(updateWidget(event.tag, COUNT_TYPE.OPEN_APP));
   }
 
   event.waitUntil(console.log(event));
   incrementWidgetclick();
 });
+
+self.addEventListener('widgetinstall', (event) => {
+  event.waitUntil(updateWidget(event.tag, COUNT_TYPE.INSTALL));
+});
+
+self.addEventListener('widgetresume', (event) => {
+  event.waitUntil(updateWidget(event.tag, COUNT_TYPE.ACTIVATE));
+});
+
+const openApp = async (tag) => {
+  const allClients = await clients.matchAll({ type: 'window' });
+  for (const client of allClients) {
+    const url = new URL(client.url);
+    if (url.pathname === '/' && 'focus' in client) {
+      return client.focus();
+    }
+  }
+  if (clients.openWindow) {
+    return clients.openWindow('/');
+  }
+};
 
 const showResult = async (action, additionalText) => {
   const allClients = await clients.matchAll({});
