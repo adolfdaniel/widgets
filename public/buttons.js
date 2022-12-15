@@ -76,6 +76,16 @@ document.getElementById('updateByInstanceIdInput').addEventListener('keydown', (
 navigator.serviceWorker.addEventListener('message', (event) => {
   switch(event.data.type) {
     case 'showResult':
+      if (event.data.action === 'widgetsSupported') {
+        if (event.data.additionalText === false) {
+          document.getElementById('widgetsSupported').textContent = 'Widgets are not supported. Please use a browser that supports widgets.';
+          document.getElementById('widgetsSupported').style.color = 'red';
+        } else {
+          document.getElementById('widgetsSupported').textContent = 'Widgets are supported.';
+          document.getElementById('widgetsSupported').style.color = 'green';
+        }
+        return;
+      }
       document.getElementById('resultAction').textContent = event.data.action;
       document.getElementById('resultAdditionalText').textContent = ` ${event.data.additionalText}`;
       break;

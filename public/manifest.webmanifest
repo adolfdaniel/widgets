@@ -3,14 +3,14 @@
   "name": "Widgets Sample App",
   "display": "standalone",
   "display_override": ["window-controls-overlay"],
-  "start_url": "./index.html",
+  "start_url": "{0}/index.html",
   "icons": [
     {
-      "src": "icons/48x48.png",
+      "src": "{0}/icons/48x48.png",
       "sizes": "48x48"
     },
     {
-      "src": "icons/144x144.png",
+      "src": "{0}/icons/144x144.png",
       "sizes": "144x144"
     }
   ],
@@ -27,26 +27,20 @@
       "description": "A widget that doesn't do much of anything yet.",
       "screenshots": [
         {
-          "src": "icons/screenshot.png",
+          "src": "{0}/icons/screenshot.png",
           "sizes": "600x400",
           "label": "Test screenshot"
         }
       ],
       "icons": [
         {
-          "src": "icons/48x48.png",
+          "src": "{0}/icons/48x48.png",
           "sizes": "48x48"
         }
       ],
       "auth": false,
       "multiple": false,
-      "update": 100,
-      "actions": [
-        {
-          "action": "buttonClick",
-          "title": "Button Click"
-        }
-      ]
+      "update": 100
     },
     {
       "name": "Max AC- Multiple",
@@ -60,14 +54,14 @@
       "description": "A widget that doesn't do much of anything yet.",
       "screenshots": [
         {
-          "src": "icons/screenshot.png",
+          "src": "{0}/icons/screenshot.png",
           "sizes": "600x400",
           "label": "Test screenshot"
         }
       ],
       "icons": [
         {
-          "src": "icons/48x48.png",
+          "src": "{0}/icons/48x48.png",
           "sizes": "48x48"
         }
       ],
@@ -81,14 +75,13 @@
       "description": "Minimal AC widget for Windows 11 dashboard",
       "screenshots": [
         {
-          "src": "icons/screenshot.png",
-          "sizes": "600x400",
-          "label": "Test screenshot"
+          "src": "{0}/icons/screenshot.png",
+          "sizes": "600x400"
         }
       ],
       "icons": [
         {
-          "src": "icons/48x48.png",
+          "src": "{0}/icons/48x48.png",
           "sizes": "48x48"
         }
       ]

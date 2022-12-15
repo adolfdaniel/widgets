@@ -142,6 +142,10 @@ const showResult = async (action, additionalText) => {
   });
 };
 
+const isWidgetsSupported = async () => {
+  showResult("widgetsSupported", !!self.widgets);
+};
+
 const getByTag = async (tag) => {
   const action = `getByTag(${tag})`;
   try {
@@ -263,6 +267,9 @@ self.onmessage = (event) => {
       break;
     case 'updateByInstanceId':
       updateByInstanceId(inputData, payload);
+      break;
+    case 'isWidgetsSupported':
+      isWidgetsSupported();
       break;
     default:
       console.log('Not sure what to do with that...');

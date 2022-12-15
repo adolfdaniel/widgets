@@ -1,5 +1,4 @@
 body {
-  padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -45,4 +44,10 @@ button {
 
 #todoList {
   padding-top: 20px;
+}
+
+#manifestText {
+  margin-top: 20px;
+  width: 100%;
+  height: 100vh;
 }

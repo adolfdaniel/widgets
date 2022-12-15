@@ -6,11 +6,13 @@
   <meta name="viewport" content="width=device-width">
   <title>Widgets Sample App</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="./manifest.webmanifest">
 </head>
 
 <body>
-  See the result of these actions in the console.
+  <h1>Widgets Sample App</h1>
+  <div id="widgetsSupported"><strong></strong></div>
+  <p>Click the buttons to perform actions on the widgets. See the result of
+  these actions in the console.</p>
   <div id="buttonContainer">
     <div>
       <input id="getByTagInput" type="text" placeholder="tag">
@@ -43,6 +45,15 @@
     <p class="bold">Result: <span id="resultAction" class="mono"></span><span id="resultAdditionalText"></span></p>
     <p class="bold"><span class="mono">widgetclick</span> count: <span id="widgetclickCount">0</span></p>
     <p>Open DevTools Console for more details.</p>
+  </div>
+  <div id="manifestContainer">
+    <p class="bold">Manifest</p>
+    <p>Update the manifest and click "Update" to see the changes.</p>
+  <div>
+    <button id="update">Update</button>
+    <button id="reset">Reset to default</button>
+  </div>
+  <textarea id="manifestText"></textarea>
   </div>
 </body>
 <script src="app.js"></script>
