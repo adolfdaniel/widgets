@@ -24,29 +24,29 @@
   <div id="buttonContainer">
     <div>
       <input id="getByTagInput" type="text" placeholder="tag">
-      <button onclick="getByTag()">Get by Tag</button>
+      <button type="button" onclick="getByTag()">Get by Tag</button>
     </div>
     <div>
       <input id="getByInstanceIdInput" type="text" placeholder="instanceId">
-      <button onclick="getByInstanceId()">Get by Instance ID</button>
+      <button type="button" onclick="getByInstanceId()">Get by Instance ID</button>
     </div>
     <div>
       <input id="getByHostId" type="text" placeholder="hostId">
-      <button onclick="getByHostId()">Get by Host ID</button>
+      <button type="button" onclick="getByHostId()">Get by Host ID</button>
     </div>
     <div>
       <input id="matchAllInput" type="text" placeholder="Match widget options">
-      <button onclick="matchAll()">Match All</button>
+      <button type="button" onclick="matchAll()">Match All</button>
     </div>
     <div>
       <input id="updateByTagInput" class="narrow" type="text" placeholder="tag">
       <input id="updateByTagPayloadInput" class="payload" type="text" placeholder="payload">
-      <button onclick="updateByTag()">Update by Tag</button>
+      <button type="button" onclick="updateByTag()">Update by Tag</button>
     </div>
     <div>
       <input id="updateByInstanceIdInput" class="narrow" type="text" placeholder="instance_id">
       <input id="updateByInstanceIdPayloadInput" class="payload" type="text" placeholder="payload">
-      <button onclick="updateByInstanceId()">Update by Instance ID</button>
+      <button type="button" onclick="updateByInstanceId()">Update by Instance ID</button>
     </div>
   </div>
   <div id="checkTheConsoleReminder">
@@ -58,10 +58,10 @@
     <p class="bold">Manifest</p>
     <p>Update the manifest and click "Update" to see the changes.</p>
   <div>
-    <button id="update">Update</button>
-    <button id="reset">Reset to default</button>
+    <button type="button" id="update">Update</button>
+    <button type="button" id="reset">Reset to default</button>
   </div>
-  <textarea id="manifestText"></textarea>
+  <textarea aria-label="Manifest JSON text" id="manifestText"></textarea>
   </div>
 </body>
 <script src="app.js"></script>
