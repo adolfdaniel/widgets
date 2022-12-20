@@ -19,9 +19,9 @@
       "name": "Max AC- Single",
       "tag": "max_ac",
       "template": "test",
-      "data": "cards/data.json",
+      "data": "{0}/cards/data.json",
       "type": "application/json",
-      "ms_ac_template": "cards/test.ac.json",
+      "ms_ac_template": "{0}/cards/test.ac.json",
 
       "short_name": "Max",
       "description": "A widget that doesn't do much of anything yet.",
@@ -46,9 +46,9 @@
       "name": "Max AC- Multiple",
       "tag": "max_ac_multiple",
       "template": "test",
-      "data": "cards/data.json",
+      "data": "{0}/cards/data.json",
       "type": "application/json",
-      "ms_ac_template": "cards/test.ac.json",
+      "ms_ac_template": "{0}/cards/test.ac.json",
 
       "short_name": "Max",
       "description": "A widget that doesn't do much of anything yet.",
