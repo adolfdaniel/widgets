@@ -6,12 +6,12 @@
   "start_url": "{0}/index.html",
   "icons": [
     {
-      "src": "{0}/icons/48x48.png",
-      "sizes": "48x48"
+      "src": "{0}/icons/512x512.png",
+      "sizes": "512x512"
     },
     {
-      "src": "{0}/icons/144x144.png",
-      "sizes": "144x144"
+      "src": "{0}/icons/192x192.png",
+      "sizes": "192x192"
     }
   ],
   "widgets": [
@@ -34,8 +34,8 @@
       ],
       "icons": [
         {
-          "src": "{0}/icons/48x48.png",
-          "sizes": "48x48"
+          "src": "{0}/icons/192x192.png",
+          "sizes": "192x192"
         }
       ],
       "auth": false,
@@ -61,8 +61,8 @@
       ],
       "icons": [
         {
-          "src": "{0}/icons/48x48.png",
-          "sizes": "48x48"
+          "src": "{0}/icons/192x192.png",
+          "sizes": "192x192"
         }
       ],
       "auth": false,
@@ -81,8 +81,8 @@
       ],
       "icons": [
         {
-          "src": "{0}/icons/48x48.png",
-          "sizes": "48x48"
+          "src": "{0}/icons/192x192.png",
+          "sizes": "192x192"
         }
       ]
     }
