@@ -22,6 +22,12 @@ const defaultTemplate = {
       verb: `${openAppVerb}`,
       style: 'positive',
     },
+    {
+      type: 'Input.Text',
+      placeholder: 'Optional Data',
+      id: 'optionalData',
+      isMultiline: true
+    },
   ],
   $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
   version: '1.5',
@@ -74,19 +80,19 @@ const updateAppWidgets = async () => {
 };
 
 self.addEventListener('install', (event) => {
-  // cach counter script for offline use
-  event.waitUntil(caches.open("v1").then((cache) => {
-    cache.add("/counter.js");
-    cache.add("/sw.js");
-    cache.add("/app.js");
-    cache.add("/index.html");
-    cache.add("/manifest.webmanifest");
-    cache.add("/favicon.ico");
-    cache.add("/buttons.js");
-    cache.add("/style.css");
-    cache.add("/icons/192x192.png");
-    cache.add("/icons/512x512.png");
-    cache.add("/icons/screenshot.png");
+  // cache counter script for offline use
+  event.waitUntil(caches.open('v1').then((cache) => {
+    cache.add('/counter.js');
+    cache.add('/sw.js');
+    cache.add('/app.js');
+    cache.add('/index.html');
+    cache.add('/manifest.webmanifest');
+    cache.add('/favicon.ico');
+    cache.add('/buttons.js');
+    cache.add('/style.css');
+    cache.add('/icons/192x192.png');
+    cache.add('/icons/512x512.png');
+    cache.add('/icons/screenshot.png');
   }));
   self.skipWaiting();
 });
@@ -94,7 +100,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request).catch(() => {
-      return new Response("Oh, no! Where's the internet?");
+      return new Response(`Oh, no! Where's the internet?`);
     })
   );
 });
@@ -102,7 +108,7 @@ self.addEventListener('fetch', (event) => {
 const incrementWidgetclick = async () => {
   const allClients = await clients.matchAll({});
   allClients.forEach(client => {
-    client.postMessage({ type: "widgetclick" });
+    client.postMessage({ type: 'widgetclick' });
   });
 };
 
@@ -147,7 +153,7 @@ const showResult = async (action, additionalText) => {
   const allClients = await clients.matchAll({});
   allClients.forEach(client => {
     client.postMessage({
-      type: "showResult",
+      type: 'showResult',
       action,
       additionalText,
     });
@@ -155,7 +161,7 @@ const showResult = async (action, additionalText) => {
 };
 
 const isWidgetsSupported = async () => {
-  showResult("widgetsSupported", !!self.widgets);
+  showResult('widgetsSupported', !!self.widgets);
 };
 
 const getByTag = async (tag) => {
@@ -165,7 +171,7 @@ const getByTag = async (tag) => {
     console.log(`${action} returned:`);
     console.log(widget);
     if (widget)
-      showResult(action, `found a widget named "${widget.definition.name}"`);
+      showResult(action, `found a widget named '${widget.definition.name}'`);
     else
       showResult(action, `returned undefined`);
   } catch (error) {
@@ -227,7 +233,7 @@ const matchAll = async (options) => {
 
 const updateByTag = async (tag, payload) => {
   if (!payload)
-    payload = { data: "content" };
+    payload = { data: 'content' };
   const action = `updateByTag(${tag}, ${JSON.stringify(payload)})`;
   try {
     await self.widgets.updateByTag(tag, payload);
@@ -241,7 +247,7 @@ const updateByTag = async (tag, payload) => {
 
 const updateByInstanceId = async (instanceId, payload) => {
   if (!payload)
-    payload = { data: "content" };
+    payload = { data: 'content' };
   const action = `updateByInstanceId(${instanceId}, ${JSON.stringify(payload)})`;
   try {
     await self.widgets.updateByInstanceId(instanceId, payload);
