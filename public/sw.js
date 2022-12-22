@@ -122,8 +122,10 @@ const incrementWidgetclick = async () => {
 
 self.addEventListener('widgetclick', (event) => {
   if (event.action === 'widget-install') {
+    // THIS IS DEPRECATED. Use widgetinstall instead.
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.INSTALL));
   } else if (event.action === 'widget-resume') {
+    // THIS IS DEPRECATED. Use widgetresume instead.
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.ACTIVATE));
   } else if (event.action === defaultActionVerb) {
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.CLICK));
@@ -132,7 +134,8 @@ self.addEventListener('widgetclick', (event) => {
     event.waitUntil(updateWidget(event.tag, COUNT_TYPE.OPEN_APP));
   }
 
-  event.waitUntil(console.log(event));
+  event.waitUntil(console.log('Event:', event));
+  event.waitUntil(console.log('Event Data:', event.data.json()));
   incrementWidgetclick();
 });
 
