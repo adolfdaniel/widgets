@@ -6,8 +6,20 @@ const defaultTemplate = {
     { type: 'TextBlock', text: 'Total widget update count: ${total}' },
     { type: 'TextBlock', text: 'Widget Activate count: ${activate}' },
     { type: 'TextBlock', text: 'Service worker activate ${swActivate} times' },
-    { type: 'TextBlock', text: 'You have clicked the increment button ${click} times' },
-    { type: 'TextBlock', text: 'You have opened the app from here ${openApp} times' },
+    {
+      type: 'TextBlock',
+      text: 'You have clicked the increment button ${click} times',
+    },
+    {
+      type: 'TextBlock',
+      text: 'You have opened the app from here ${openApp} times',
+    },
+    {
+      type: 'Input.Text',
+      placeholder: 'Optional Data',
+      id: 'optionalData',
+      isMultiline: true,
+    },
   ],
   actions: [
     {
@@ -21,12 +33,6 @@ const defaultTemplate = {
       title: 'Open App',
       verb: `${openAppVerb}`,
       style: 'positive',
-    },
-    {
-      type: 'Input.Text',
-      placeholder: 'Optional Data',
-      id: 'optionalData',
-      isMultiline: true
     },
   ],
   $schema: 'http://adaptivecards.io/schemas/adaptive-card.json',
@@ -81,19 +87,21 @@ const updateAppWidgets = async () => {
 
 self.addEventListener('install', (event) => {
   // cache counter script for offline use
-  event.waitUntil(caches.open('v1').then((cache) => {
-    cache.add('/counter.js');
-    cache.add('/sw.js');
-    cache.add('/app.js');
-    cache.add('/index.html');
-    cache.add('/manifest.webmanifest');
-    cache.add('/favicon.ico');
-    cache.add('/buttons.js');
-    cache.add('/style.css');
-    cache.add('/icons/192x192.png');
-    cache.add('/icons/512x512.png');
-    cache.add('/icons/screenshot.png');
-  }));
+  event.waitUntil(
+    caches.open('v1').then((cache) => {
+      cache.add('/counter.js');
+      cache.add('/sw.js');
+      cache.add('/app.js');
+      cache.add('/index.html');
+      cache.add('/manifest.webmanifest');
+      cache.add('/favicon.ico');
+      cache.add('/buttons.js');
+      cache.add('/style.css');
+      cache.add('/icons/192x192.png');
+      cache.add('/icons/512x512.png');
+      cache.add('/icons/screenshot.png');
+    })
+  );
   self.skipWaiting();
 });
 
@@ -107,7 +115,7 @@ self.addEventListener('fetch', (event) => {
 
 const incrementWidgetclick = async () => {
   const allClients = await clients.matchAll({});
-  allClients.forEach(client => {
+  allClients.forEach((client) => {
     client.postMessage({ type: 'widgetclick' });
   });
 };
@@ -151,7 +159,7 @@ const openApp = async (tag) => {
 
 const showResult = async (action, additionalText) => {
   const allClients = await clients.matchAll({});
-  allClients.forEach(client => {
+  allClients.forEach((client) => {
     client.postMessage({
       type: 'showResult',
       action,
@@ -172,8 +180,7 @@ const getByTag = async (tag) => {
     console.log(widget);
     if (widget)
       showResult(action, `found a widget named '${widget.definition.name}'`);
-    else
-      showResult(action, `returned undefined`);
+    else showResult(action, `returned undefined`);
   } catch (error) {
     console.log(error);
     showResult(action, `failed.`);
@@ -188,8 +195,7 @@ const getByInstanceId = async (instanceId) => {
     console.log(widget);
     if (widget)
       showResult(action, `found a widget named ${widget.definition.name}`);
-    else
-      showResult(action, `returned undefined`);
+    else showResult(action, `returned undefined`);
   } catch (error) {
     console.log(error);
     showResult(action, `failed.`);
@@ -202,10 +208,8 @@ const getByHostId = async (hostId) => {
     const widgets = await self.widgets.getByHostId(hostId);
     console.log(`${action} returned:`);
     console.log(widgets);
-    if (widgets)
-      showResult(action, `found ${widgets.length} widgets`);
-    else
-      showResult(action, `returned undefined`);
+    if (widgets) showResult(action, `found ${widgets.length} widgets`);
+    else showResult(action, `returned undefined`);
   } catch (error) {
     console.log(error);
     showResult(action, `failed.`);
@@ -213,18 +217,15 @@ const getByHostId = async (hostId) => {
 };
 
 const matchAll = async (options) => {
-  if (!options)
-    options = {};
+  if (!options) options = {};
 
   const action = `matchAll(${JSON.stringify(options)})`;
   try {
     const widgets = await self.widgets.matchAll(options);
     console.log(`${action} returned:`);
     console.log(widgets);
-    if (widgets)
-      showResult(action, `found ${widgets.length} widgets`);
-    else
-      showResult(action, `returned undefined`);
+    if (widgets) showResult(action, `found ${widgets.length} widgets`);
+    else showResult(action, `returned undefined`);
   } catch (error) {
     console.log(error);
     showResult(action, `failed.`);
@@ -232,8 +233,7 @@ const matchAll = async (options) => {
 };
 
 const updateByTag = async (tag, payload) => {
-  if (!payload)
-    payload = { data: 'content' };
+  if (!payload) payload = { data: 'content' };
   const action = `updateByTag(${tag}, ${JSON.stringify(payload)})`;
   try {
     await self.widgets.updateByTag(tag, payload);
@@ -246,9 +246,10 @@ const updateByTag = async (tag, payload) => {
 };
 
 const updateByInstanceId = async (instanceId, payload) => {
-  if (!payload)
-    payload = { data: 'content' };
-  const action = `updateByInstanceId(${instanceId}, ${JSON.stringify(payload)})`;
+  if (!payload) payload = { data: 'content' };
+  const action = `updateByInstanceId(${instanceId}, ${JSON.stringify(
+    payload
+  )})`;
   try {
     await self.widgets.updateByInstanceId(instanceId, payload);
     console.log(`${action} completed`);
