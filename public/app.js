@@ -27,15 +27,15 @@ function escapeManifestSpaces(manifest) {
 async function getDefaultManifestText() {
   const response = await fetch('manifest.webmanifest');
   const defaultManifest = await response.json();
-  return JSON.stringify(defaultManifest, null, " ").replaceAll('{0}', document.location.origin);
+  return JSON.stringify(defaultManifest, null, " ").replaceAll('"/', `"${document.location.origin}/`);
 }
 
 async function setDefaultManifest() {
-  localStorage.setItem('manifestText', await getDefaultManifestText());
+  localStorage.setItem('manifestText', '');
   location.reload();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Hook up the buttons
   document.getElementById("update").addEventListener("click", () => {
     localStorage.setItem('manifestText', document.getElementById("manifestText").value);
@@ -46,20 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const manifestText = localStorage.getItem('manifestText');
+  if (!manifestText) {
+    document.head.innerHTML += "<link rel='manifest' href='manifest.webmanifest'>";
+  } else {
+    // Escape the quotes and spaces from the manifest text so it can be used in an HTML attribute.
+    const escapedManifestText = JSON.stringify(escapeManifestSpaces(JSON.parse(manifestText))).replaceAll("'", "&apos;");
+    // Add the manifest early so it is noticed automatically
+    document.head.innerHTML += "<link rel='manifest' href='data:application/manifest+json," + escapedManifestText + "'>";
+  }
+
   const manifestTextElement = document.getElementById("manifestText");
-  // Escape the quotes and spaces from the manifest text so it can be used in an HTML attribute.
-  const escapedManifestText = JSON.stringify(escapeManifestSpaces(JSON.parse(manifestText))).replaceAll("'", "&apos;");
-  // Add the manifest early so it is noticed automatically
-  document.head.innerHTML += "<link rel='manifest' href='data:application/manifest+json," + escapedManifestText + "'>";
-  manifestTextElement.value = manifestText;
+  manifestTextElement.value = manifestText || await getDefaultManifestText();
 
   // Register the service worker
   if (navigator.serviceWorker) {
     registerServiceWorker();
   }
 })
-
-// Establish the default manifest value to use, if not already defined
-if (!localStorage.getItem('manifestText')) {
-  setDefaultManifest();
-}

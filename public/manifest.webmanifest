@@ -3,14 +3,14 @@
   "name": "Widgets Sample App",
   "display": "standalone",
   "display_override": ["window-controls-overlay"],
-  "start_url": "{0}/index.html",
+  "start_url": "/index.html",
   "icons": [
     {
-      "src": "{0}/icons/512x512.png",
+      "src": "/icons/512x512.png",
       "sizes": "512x512"
     },
     {
-      "src": "{0}/icons/192x192.png",
+      "src": "/icons/192x192.png",
       "sizes": "192x192"
     }
   ],
@@ -19,22 +19,22 @@
       "name": "Max AC- Single",
       "tag": "max_ac",
       "template": "test",
-      "data": "{0}/cards/data.json",
+      "data": "/cards/data.json",
       "type": "application/json",
-      "ms_ac_template": "{0}/cards/test.ac.json",
+      "ms_ac_template": "/cards/test.ac.json",
 
       "short_name": "Max",
       "description": "A widget that doesn't do much of anything yet.",
       "screenshots": [
         {
-          "src": "{0}/icons/screenshot.png",
+          "src": "/icons/screenshot.png",
           "sizes": "600x400",
           "label": "Test screenshot"
         }
       ],
       "icons": [
         {
-          "src": "{0}/icons/192x192.png",
+          "src": "/icons/192x192.png",
           "sizes": "192x192"
         }
       ],
@@ -46,22 +46,22 @@
       "name": "Max AC- Multiple",
       "tag": "max_ac_multiple",
       "template": "test",
-      "data": "{0}/cards/data.json",
+      "data": "/cards/data.json",
       "type": "application/json",
-      "ms_ac_template": "{0}/cards/test.ac.json",
+      "ms_ac_template": "/cards/test.ac.json",
 
       "short_name": "Max",
       "description": "A widget that doesn't do much of anything yet.",
       "screenshots": [
         {
-          "src": "{0}/icons/screenshot.png",
+          "src": "/icons/screenshot.png",
           "sizes": "600x400",
           "label": "Test screenshot"
         }
       ],
       "icons": [
         {
-          "src": "{0}/icons/192x192.png",
+          "src": "/icons/192x192.png",
           "sizes": "192x192"
         }
       ],
@@ -75,13 +75,13 @@
       "description": "Minimal AC widget for Windows 11 dashboard",
       "screenshots": [
         {
-          "src": "{0}/icons/screenshot.png",
+          "src": "/icons/screenshot.png",
           "sizes": "600x400"
         }
       ],
       "icons": [
         {
-          "src": "{0}/icons/192x192.png",
+          "src": "/icons/192x192.png",
           "sizes": "192x192"
         }
       ]
