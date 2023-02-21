@@ -3,6 +3,9 @@
   "name": "Widgets Sample App",
   "display": "standalone",
   "display_override": ["window-controls-overlay"],
+  "edge_side_panel": {
+    "preferred_width": 600
+  },
   "start_url": "/index.html",
   "icons": [
     {
