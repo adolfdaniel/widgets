@@ -63,3 +63,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     registerServiceWorker();
   }
 })
+
+
+window.addEventListener('beforeinstallprompt', (event) => {
+  // Prevent the mini-infobar from appearing on mobile.
+  event.preventDefault();
+  console.log('👍', 'beforeinstallprompt', event);
+  // Stash the event so it can be triggered later.
+  window.deferredPrompt = event;
+  // Remove the 'hidden' class from the install button container.
+  divInstall.classList.toggle('hidden', false);
+});
+
+// listen to enter keydown event and prompt for install.
+document.addEventListener('keydown', async (event) => {
+  if (event.keyCode === 13) {
+    // Enter key pressed
+    if (window.deferredPrompt) {
+      // Show the install prompt.
+      window.deferredPrompt.prompt();
+      // Log the result
+      const result = await window.deferredPrompt.userChoice;
+      console.log('👍', 'userChoice', result);
+      // Reset the deferred prompt variable, since
+      // prompt() can only be called once.
+      window.deferredPrompt = null;
+    }
+  }
+});
+
+window.addEventListener('appinstalled', (event) => {
+  console.log('👍', 'appinstalled', event);
+  // Clear the deferredPrompt so it can be garbage collected
+  window.deferredPrompt = null;
+});
