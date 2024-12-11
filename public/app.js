@@ -62,6 +62,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (navigator.serviceWorker) {
     registerServiceWorker();
   }
+
+  if (window.translation) {
+    translation.canTranslate({sourceLanguage:'en-us', targetLanguage: 'es-es'});
+  } else {
+    console.log("translation API is not available");
+  }
 })
 
 
